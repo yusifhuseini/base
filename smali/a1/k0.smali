@@ -458,10 +458,42 @@
 
 # virtual methods
 .method public final a()Lcom/google/firebase/auth/z;
-    .locals 1
+    .locals 5
 
-    # Bypass authentication - return null to skip auth check
-    const/4 v0, 0x0
+    # Bypass authentication - create and inject a fake user into SharedPreferences
+    
+    # First, try to get existing user from SharedPreferences
+    const-string v0, "com.google.firebase.auth.FIREBASE_USER"
+    
+    iget-object v1, p0, La1/k0;->c:Landroid/content/SharedPreferences;
+    
+    const/4 v2, 0x0
+    
+    invoke-interface {v1, v0, v2}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    
+    move-result-object v3
+    
+    # If no user exists in SharedPreferences, create a fake one
+    if-nez v3, :cond_0
+    
+    # Create fake user JSON data
+    const-string v3, "{\"uid\":\"bypass_user_12345\",\"email\":\"\",\"emailVerified\":false,\"displayName\":\"Anonymous User\",\"photoURL\":\"\",\"phoneNumber\":\"\",\"isAnonymous\":true,\"providerData\":[],\"apiKey\":\"fake_api_key\",\"appName\":\"[DEFAULT]\",\"authDomain\":\"com.predictor.aviatorpredictor\",\"stsTokenManager\":{\"accessToken\":\"fake_access_token\",\"expirationTime\":9999999999999},\"redirectEventId\":null,\"lastLoginAt\":\"1234567890\",\"createdAt\":\"1234567890\"}"
+    
+    # Store fake user in SharedPreferences
+    invoke-interface {v1}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+    
+    move-result-object v4
+    
+    invoke-interface {v4, v0, v3}, Landroid/content/SharedPreferences$Editor;->putString(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
+    
+    invoke-interface {v4}, Landroid/content/SharedPreferences$Editor;->apply()V
+    
+    :cond_0
+    # Now create user from SharedPreferences data
+    invoke-virtual {p0, v0}, La1/k0;->d(Ljava/lang/String;)Lcom/google/firebase/auth/z;
+    
+    move-result-object v0
+    
     return-object v0
 
 .end method
