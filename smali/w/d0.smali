@@ -404,15 +404,20 @@
 .method public static g(Landroid/content/Context;I)Ljava/lang/String;
     .locals 3
 
-    invoke-virtual {p0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
-
-    move-result-object v0
-
+    # Bypass license checking - always return null (success)
     const/4 v1, 0x0
+    return-object v1
 
-    const-string v2, "GoogleApiAvailability"
+    # Original code below (commented out by bypass)
+    # invoke-virtual {p0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
-    packed-switch p1, :pswitch_data_0
+    # move-result-object v0
+
+    # const/4 v1, 0x0
+
+    # const-string v2, "GoogleApiAvailability"
+
+    # packed-switch p1, :pswitch_data_0
 
     :pswitch_0
     new-instance p0, Ljava/lang/StringBuilder;

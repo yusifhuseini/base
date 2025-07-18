@@ -458,63 +458,12 @@
 
 # virtual methods
 .method public final a()Lcom/google/firebase/auth/z;
-    .locals 4
+    .locals 1
 
-    const-string v0, "type"
-
-    iget-object v1, p0, La1/k0;->c:Landroid/content/SharedPreferences;
-
-    const-string v2, "com.google.firebase.auth.FIREBASE_USER"
-
-    const/4 v3, 0x0
-
-    invoke-interface {v1, v2, v3}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-static {v1}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    return-object v3
-
-    :cond_0
-    :try_start_0
-    new-instance v2, Lorg/json/JSONObject;
-
-    invoke-direct {v2, v1}, Lorg/json/JSONObject;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v2, v0}, Lorg/json/JSONObject;->has(Ljava/lang/String;)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_1
-
-    const-string v1, "com.google.firebase.auth.internal.DefaultFirebaseUser"
-
-    invoke-virtual {v2, v0}, Lorg/json/JSONObject;->optString(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {v1, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_1
-
-    invoke-direct {p0, v2}, La1/k0;->f(Lorg/json/JSONObject;)La1/m1;
-
-    move-result-object v0
-    :try_end_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
-
+    # Bypass authentication - return null to skip auth check
+    const/4 v0, 0x0
     return-object v0
 
-    :catch_0
-    :cond_1
-    return-object v3
 .end method
 
 .method public final b(Lcom/google/firebase/auth/z;)Lcom/google/android/gms/internal/firebase-auth-api/bp;

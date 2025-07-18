@@ -218,34 +218,17 @@
 .method public f(Landroid/content/Context;)I
     .locals 1
 
-    sget v0, Ls/e;->a:I
-
-    invoke-virtual {p0, p1, v0}, Ls/e;->g(Landroid/content/Context;I)I
-
-    move-result p1
-
+    # Bypass Google Play Services check - always return 0 (success)
+    const/4 p1, 0x0
     return p1
 .end method
 
 .method public g(Landroid/content/Context;I)I
     .locals 0
 
-    invoke-static {p1, p2}, Ls/i;->e(Landroid/content/Context;I)I
-
-    move-result p2
-
-    invoke-static {p1, p2}, Ls/i;->f(Landroid/content/Context;I)Z
-
-    move-result p1
-
-    if-eqz p1, :cond_0
-
-    const/16 p1, 0x12
-
+    # Bypass Google Play Services check - always return 0 (success)
+    const/4 p1, 0x0
     return p1
-
-    :cond_0
-    return p2
 .end method
 
 .method public h(Landroid/content/Context;Ljava/lang/String;)Z
